@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jessicai-app
+  namespace: jessicai
+  labels:
+    app: jessicai-app
+spec:
+  selector:
+    app: jessicai-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: http
+  type: ClusterIP
