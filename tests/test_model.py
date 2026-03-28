@@ -74,39 +74,7 @@ def _make_mock_tokenizer(vocab_size: int = 512, eos_id: int = 2):
     return _MockTokenizer()
 
 
-# ---------------------------------------------------------------------------
-# Shared tiny config for all tests (fast CPU execution)
-# ---------------------------------------------------------------------------
 
-@pytest.fixture(scope="module")
-def tiny_config():
-    return QuantumNeuralBrainConfig(
-        vocab_size=512,
-        hidden_size=64,
-        num_hidden_layers=1,
-        num_attention_heads=4,
-        intermediate_size=128,
-        max_position_embeddings=32,
-        dropout_prob=0.0,
-        num_qubits=3,
-        quantum_circuit_depth=1,
-        num_quantum_blocks=2,
-        num_quad_brains=1,
-        mesh_fabric_layers=1,
-        vertex_dimensions=4,
-    )
-
-
-@pytest.fixture(scope="module")
-def tiny_model(tiny_config):
-    model = QuantumNeuralBrainModel(tiny_config)
-    model.eval()
-    return model
-
-
-# ---------------------------------------------------------------------------
-# Config tests
-# ---------------------------------------------------------------------------
 
 class TestConfig:
     def test_defaults(self):
