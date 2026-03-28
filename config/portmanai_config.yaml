@@ -1,0 +1,23 @@
+# PortmanAI configuration
+portmanai:
+  debugger:
+    auto_suggest_fix: true
+    max_history: 500
+    severity_threshold: low       # report issues at this severity and above
+  toolchain:
+    execution_timeout: 60         # seconds
+    allowed_tools:
+      - nmap
+      - masscan
+      - nikto
+      - gobuster
+      - sqlmap
+      - hashcat
+      - john
+      - hydra
+      - binwalk
+      - strings
+      - file
+      - gdb
+      - python3
+      - git
