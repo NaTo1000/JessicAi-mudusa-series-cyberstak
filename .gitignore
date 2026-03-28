@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Model weights and checkpoints (large binary files)
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+checkpoints/
+runs/
+wandb/
+outputs/
+saved_models/
+
+# Data files
+data/
+datasets/
+*.csv
+*.json.gz
+*.parquet
+
+# Logs
+logs/
+*.log
+*.out
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Hugging Face cache
+~/.cache/huggingface/
+
+# Gradio temp
+gradio_cached_examples/
+flagged/
+
+# Pytest
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml

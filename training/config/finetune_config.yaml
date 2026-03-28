@@ -1,0 +1,42 @@
+# Fine-tuning configuration for JessicaAi Mudusa
+base_model: "NaTo1000/jessicai-mudusa"  # or local path to pretrained checkpoint
+
+peft:
+  use_peft: true
+  lora_r: 64
+  lora_alpha: 128
+  lora_dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+    - "gate_proj"
+    - "up_proj"
+    - "down_proj"
+
+training:
+  output_dir: "./outputs/finetune"
+  num_train_epochs: 3
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  gradient_accumulation_steps: 16
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+  lr_scheduler_type: "cosine"
+  max_grad_norm: 1.0
+  fp16: false
+  bf16: true
+  save_steps: 500
+  eval_steps: 500
+  logging_steps: 50
+  save_total_limit: 3
+  report_to: "none"
+  seed: 42
+
+data:
+  dataset_name: "HuggingFaceH4/ultrachat_200k"
+  text_column: "messages"
+  max_seq_length: 4096
+  preprocessing_num_workers: 4
