@@ -1,0 +1,21 @@
+# Core HuggingFace libraries
+transformers>=4.40.0
+datasets>=2.19.0
+huggingface_hub>=0.23.0
+tokenizers>=0.19.0
+
+# Numerical / signal processing
+numpy>=1.24.0
+scipy>=1.12.0
+
+# MFCC-based speaker embeddings
+python_speech_features>=0.6
+
+# Live microphone capture (optional; required only for live voice enrollment/verification)
+sounddevice>=0.4.6
+
+# Security / encryption helpers (GPG is handled via the system gpg binary)
+# No additional Python GPG library required for clearsign verification.
+
+# Logging / configuration
+python-dotenv>=1.0.0

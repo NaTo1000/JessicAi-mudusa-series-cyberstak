@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jessicai-huggingface-fork"
+version = "0.1.0"
+description = "Autonomous HuggingFace integration with GPG + voice authentication"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "NaTo1000" }]
+keywords = ["huggingface", "ai", "security", "gpg", "authentication"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+]
+dependencies = [
+    "transformers>=4.40.0",
+    "datasets>=2.19.0",
+    "huggingface_hub>=0.23.0",
+    "tokenizers>=0.19.0",
+    "numpy>=1.24.0",
+    "scipy>=1.12.0",
+    "python_speech_features>=0.6",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+microphone = ["sounddevice>=0.4.6"]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+]
+
+[project.scripts]
+jessicai-hf = "huggingface_fork.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["huggingface_fork*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

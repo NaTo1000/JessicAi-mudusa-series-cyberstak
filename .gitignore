@@ -1,0 +1,11 @@
+logs/
+voice_samples/
+.gnupg/
+.hf_cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+*.asc
