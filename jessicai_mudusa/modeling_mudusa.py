@@ -148,7 +148,10 @@ class QuantumPhaseAttention(nn.Module):
         self.v_proj = nn.Linear(self.hidden_size, self.num_kv_heads * self.head_dim, bias=False)
         self.o_proj = nn.Linear(self.num_heads * self.head_dim, self.hidden_size, bias=False)
 
-        # Quantum phase angles – one scalar per attention head
+        # Quantum phase angles – one per attention head, initialised at zero.
+        # Each head modulates its attention scores by cos(φ_h) + 1 ∈ (0, 2].
+        # quantum_phase_dim from config is reserved for future extended phase
+        # representations; currently each head uses a single scalar angle.
         self.quantum_phase = nn.Parameter(
             torch.zeros(self.num_heads)
         )
@@ -239,7 +242,9 @@ class MudusaDecoderLayer(nn.Module):
         self.input_layernorm = MudusaRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
         self.post_attention_layernorm = MudusaRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
-        # Synaptic plasticity gate – a per-layer learnable scalar in (0, 1)
+        # Synaptic plasticity gate – a per-dimension learnable gate vector of
+        # shape (hidden_size,). Applied element-wise after attention to scale
+        # each feature independently, mimicking Hebbian synapse weighting.
         self.synaptic_gate = nn.Parameter(torch.ones(config.hidden_size))
 
     def forward(

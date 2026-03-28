@@ -71,7 +71,7 @@ def main() -> None:
     # ------------------------------------------------------------------ #
     # 1. Build model from scratch                                         #
     # ------------------------------------------------------------------ #
-    logger.info("Initialising model from config …")
+    logger.info("Initializing model from config …")
     model_cfg = MudusaConfig(**cfg["model"])
     model = MudusaForCausalLM(model_cfg)
 

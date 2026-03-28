@@ -106,7 +106,7 @@ def list_models():
             {
                 "id": "jessicai-mudusa",
                 "object": "model",
-                "created": 1700000000,
+                "created": int(time.time()),
                 "owned_by": "NaTo1000",
             }
         ],

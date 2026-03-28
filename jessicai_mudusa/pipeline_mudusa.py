@@ -256,12 +256,9 @@ class MudusaPipeline:
             # Nucleus filtering
             if top_p < 1.0:
                 sorted_logits, sorted_indices = torch.sort(logits, descending=True)
-                cumulative_probs = torch.cumsum(
-                    torch.softmax(sorted_logits, dim=-1), dim=-1
-                )
-                sorted_indices_to_remove = cumulative_probs - torch.softmax(
-                    sorted_logits, dim=-1
-                ) > top_p
+                sorted_probs = torch.softmax(sorted_logits, dim=-1)
+                cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+                sorted_indices_to_remove = cumulative_probs - sorted_probs > top_p
                 sorted_logits[sorted_indices_to_remove] = float("-inf")
                 logits = torch.zeros_like(logits).scatter_(
                     1, sorted_indices, sorted_logits
