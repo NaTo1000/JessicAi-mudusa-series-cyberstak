@@ -1,0 +1,70 @@
+version: "3.9"
+
+# JessicAi Medusa – Hive Cluster Compose stack
+# Brings up 3 hive nodes + a cluster coordinator
+
+networks:
+  hive_mesh:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/24
+
+volumes:
+  node_keys:
+
+x-hive-node: &hive-node
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
+  networks:
+    - hive_mesh
+  restart: unless-stopped
+  environment:
+    HIVE_MAX_CPU: "5.0"
+    HIVE_MAX_RAM: "5.0"
+  volumes:
+    - node_keys:/app/.keys
+
+services:
+  node1:
+    <<: *hive-node
+    container_name: hive_node1
+    hostname: hive-node1
+    environment:
+      HIVE_HOST: "0.0.0.0"
+      HIVE_PORT: "7331"
+      MESH_UDP_PORT: "5353"
+      MESH_TCP_PORT: "5354"
+      HIVE_MAX_CPU: "5.0"
+      HIVE_MAX_RAM: "5.0"
+    ports:
+      - "7331:7331"
+
+  node2:
+    <<: *hive-node
+    container_name: hive_node2
+    hostname: hive-node2
+    environment:
+      HIVE_HOST: "0.0.0.0"
+      HIVE_PORT: "7332"
+      MESH_UDP_PORT: "5363"
+      MESH_TCP_PORT: "5364"
+      HIVE_MAX_CPU: "5.0"
+      HIVE_MAX_RAM: "5.0"
+    ports:
+      - "7332:7332"
+
+  node3:
+    <<: *hive-node
+    container_name: hive_node3
+    hostname: hive-node3
+    environment:
+      HIVE_HOST: "0.0.0.0"
+      HIVE_PORT: "7333"
+      MESH_UDP_PORT: "5373"
+      MESH_TCP_PORT: "5374"
+      HIVE_MAX_CPU: "5.0"
+      HIVE_MAX_RAM: "5.0"
+    ports:
+      - "7333:7333"

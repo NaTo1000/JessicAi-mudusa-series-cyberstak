@@ -1,0 +1,42 @@
+---
+# Kubernetes Service – exposes hive nodes internally within the cluster
+apiVersion: v1
+kind: Service
+metadata:
+  name: jessicai-hive
+  namespace: jessicai
+  labels:
+    app: jessicai-hive
+spec:
+  selector:
+    app: jessicai-hive
+  ports:
+    - name: hive-tcp
+      port: 7331
+      targetPort: 7331
+      protocol: TCP
+    - name: mesh-tcp
+      port: 5354
+      targetPort: 5354
+      protocol: TCP
+  # ClusterIP means the service is NOT accessible from outside the cluster.
+  # The PEX mesh is intentionally private.
+  type: ClusterIP
+---
+# Headless service enables direct DNS resolution of individual pod IPs,
+# which is required for peer-to-peer mesh bootstrapping.
+apiVersion: v1
+kind: Service
+metadata:
+  name: jessicai-hive-headless
+  namespace: jessicai
+  labels:
+    app: jessicai-hive
+spec:
+  clusterIP: None
+  selector:
+    app: jessicai-hive
+  ports:
+    - name: hive-tcp
+      port: 7331
+      targetPort: 7331
