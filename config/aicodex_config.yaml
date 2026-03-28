@@ -1,0 +1,14 @@
+# AicodeX configuration
+aicodex:
+  default_mode: coding           # coding | design | debug
+  hotkeys:
+    coding: "ctrl+1"
+    design: "ctrl+2"
+    debug:  "ctrl+3"
+  code_generation:
+    default_language: python
+    max_tokens: 4096
+    temperature: 0.2
+  fine_tuning:
+    enabled: false
+    queue_size_limit: 1000

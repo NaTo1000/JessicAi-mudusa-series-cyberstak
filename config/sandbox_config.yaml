@@ -1,0 +1,23 @@
+# Sandbox configuration
+sandbox:
+  default_image: kalilinux/kali-rolling
+  blackarch_image: blackarchlinux/blackarch
+  memory_limit: "2g"
+  cpu_quota: 1.0
+  network_mode: none             # none | bridge | host
+  read_only_root: true
+  auto_remove: true
+
+  model_runner:
+    models_dir: ~/.aimodels
+    inference_timeout: 120       # seconds
+
+  vps:
+    default_provider: local      # local | aws | gcp | azure | hetzner
+    default_region: local
+    auto_scale_threshold: 80     # percent CPU/RAM before auto-scaling
+    initial_allocation:
+      cpu_cores: 2
+      ram_gb: 4.0
+      gpu_count: 0
+      storage_gb: 20.0
