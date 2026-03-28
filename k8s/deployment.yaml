@@ -1,0 +1,71 @@
+---
+# Kubernetes deployment – JessicAi Medusa Hive Node
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jessicai-hive
+  namespace: jessicai
+  labels:
+    app: jessicai-hive
+    component: hive-node
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jessicai-hive
+  template:
+    metadata:
+      labels:
+        app: jessicai-hive
+    spec:
+      containers:
+        - name: hive-node
+          image: jessicai-hive:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: hive-tcp
+              containerPort: 7331
+              protocol: TCP
+            - name: mesh-udp
+              containerPort: 5353
+              protocol: UDP
+            - name: mesh-tcp
+              containerPort: 5354
+              protocol: TCP
+          env:
+            - name: HIVE_HOST
+              value: "0.0.0.0"
+            - name: HIVE_PORT
+              value: "7331"
+            - name: HIVE_MAX_CPU
+              value: "5.0"
+            - name: HIVE_MAX_RAM
+              value: "5.0"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"    # hard cap ~5% of a 4-core node
+              memory: "256Mi"
+          livenessProbe:
+            tcpSocket:
+              port: 7331
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            tcpSocket:
+              port: 7331
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          volumeMounts:
+            - name: node-keys
+              mountPath: /app/.keys
+      volumes:
+        - name: node-keys
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jessicai
