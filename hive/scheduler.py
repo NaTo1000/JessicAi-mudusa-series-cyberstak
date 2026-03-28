@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 MAX_RETRIES: int = 3
 QUEUE_POLL_SECS: float = 0.1
+RETRY_BASE_DELAY_SECS: float = 0.5
 
 
 @dataclass(order=True)
@@ -96,7 +97,7 @@ class TaskScheduler:
         if result is None or result.error == "cap_exceeded":
             if item.retries < MAX_RETRIES:
                 item.retries += 1
-                wait = 0.5 * (2 ** item.retries)  # exponential back-off
+                wait = RETRY_BASE_DELAY_SECS * (2 ** item.retries)  # exponential back-off
                 logger.debug(
                     "Retrying task %s in %.1fs (attempt %d/%d)",
                     item.packet.task_id[:8], wait, item.retries, MAX_RETRIES,

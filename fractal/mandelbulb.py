@@ -60,7 +60,9 @@ def mandelbulb_de(
         if r > bailout:
             break
         # Convert to polar
-        theta = math.acos(float(z[2]) / r) if r else 0.0
+        # Clamp argument to [-1, 1] to guard against floating-point error
+        # when r is very small but nonzero (avoids math domain error in acos).
+        theta = math.acos(max(-1.0, min(1.0, float(z[2]) / r))) if r > 1e-10 else 0.0
         phi = math.atan2(float(z[1]), float(z[0]))
         dr = r ** (power - 1.0) * power * dr + 1.0
         # Scale and rotate

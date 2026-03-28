@@ -39,7 +39,9 @@ DEFAULT_ALLOWLIST: List[str] = [
 ]
 
 
-@dataclass
+# nmcli reports signal strength as 0-100; subtract this offset to convert
+# back to an approximate dBm value (-110 = -110 dBm at signal=0).
+_NMCLI_SIGNAL_TO_DBM_OFFSET = 110
 class AccessPoint:
     ssid: str
     bssid: str
@@ -173,7 +175,7 @@ class WiFiManager:
                     aps.append(AccessPoint(
                         ssid=ssid,
                         bssid=bssid,
-                        signal_dbm=signal - 110,
+                        signal_dbm=signal - _NMCLI_SIGNAL_TO_DBM_OFFSET,
                         frequency_mhz=freq,
                         open=(not security or security.strip() == "--"),
                     ))

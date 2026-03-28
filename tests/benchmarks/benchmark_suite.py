@@ -113,7 +113,7 @@ from hive.node import HiveNode, TaskPacket
 import json
 
 
-@pytest.mark.asyncio
+MAX_ACCEPTABLE_DISPATCH_LATENCY_MS: float = 500.0
 async def test_local_task_dispatch_latency(benchmark):
     """Measure round-trip latency for a local no-op task dispatch."""
     node = HiveNode(host="127.0.0.1", port=17100)
@@ -140,4 +140,5 @@ async def test_local_task_dispatch_latency(benchmark):
     avg_ms = (sum(times) / len(times)) * 1000
     p99_ms = sorted(times)[int(0.99 * len(times))] * 1000
     print(f"\nTask dispatch avg={avg_ms:.2f}ms  p99={p99_ms:.2f}ms")
-    assert avg_ms < 500, f"Average dispatch latency too high: {avg_ms:.2f}ms"
+    assert avg_ms < MAX_ACCEPTABLE_DISPATCH_LATENCY_MS, \
+        f"Average dispatch latency too high: {avg_ms:.2f}ms"

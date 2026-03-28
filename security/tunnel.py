@@ -15,6 +15,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import struct
+from collections.abc import Awaitable
 from typing import Callable, Optional
 
 from .encryption import MeshEncryption
@@ -72,8 +73,8 @@ class EncryptedTunnel:
         session_key: bytes,
         bind_host: str,
         port: int,
-        handler: Callable[["EncryptedTunnel"], asyncio.coroutines],
-        honeypot_handler: Optional[Callable[[asyncio.StreamReader, asyncio.StreamWriter], asyncio.coroutines]] = None,
+        handler: Callable[["EncryptedTunnel"], Awaitable[None]],
+        honeypot_handler: Optional[Callable[[asyncio.StreamReader, asyncio.StreamWriter], Awaitable[None]]] = None,
     ) -> asyncio.AbstractServer:
         enc = MeshEncryption(session_key)
 
