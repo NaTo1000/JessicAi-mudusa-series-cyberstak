@@ -1,0 +1,65 @@
+# Quantum Quad-Brain · Compute Array Configuration
+# =================================================
+# Adjust this file to match your physical hardware setup.
+
+array:
+  dram_capacity_gb: 8
+  initial_cm4_nodes: 4
+  scheduling_strategy: least_loaded   # round_robin | least_loaded | random
+
+storage:
+  stripe_size_kb: 128
+  nvme_devices:
+    - id: nvme0
+      path: /dev/nvme0n1
+      capacity_gb: 2000
+      read_bandwidth_gbps: 7.0
+      write_bandwidth_gbps: 6.5
+    - id: nvme1
+      path: /dev/nvme1n1
+      capacity_gb: 2000
+      read_bandwidth_gbps: 7.0
+      write_bandwidth_gbps: 6.5
+
+cache:
+  capacity_gb: 8
+  eviction_policy: lru   # lru | lfu
+
+cluster:
+  heartbeat_timeout_s: 30
+  nodes:
+    - id: cm4-000
+      ip: 10.0.0.100
+      ram_gb: 8
+    - id: cm4-001
+      ip: 10.0.0.101
+      ram_gb: 8
+    - id: cm4-002
+      ip: 10.0.0.102
+      ram_gb: 8
+    - id: cm4-003
+      ip: 10.0.0.103
+      ram_gb: 8
+
+quantum:
+  brains:
+    - id: alpha
+      n_qubits: 6
+      shots: 256
+    - id: beta
+      n_qubits: 8
+      shots: 512
+    - id: gamma
+      n_qubits: 10
+      shots: 512
+    - id: delta
+      n_qubits: 12
+      shots: 1024
+
+metrics:
+  window_size: 300
+  sample_interval_s: 1.0
+
+fault_tolerance:
+  min_healthy_nvme: 1
+  min_online_nodes: 1
