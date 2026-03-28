@@ -1,0 +1,55 @@
+# JessicAI AGI Architecture – Runtime Configuration
+#
+# This file holds the default parameters for a single node deployment.
+# All values can be overridden at runtime via environment variables or
+# by passing an explicit ProcessorConfig instance.
+
+tesseract:
+  # Conceptual depth – 1 trillion logical layers
+  logical_layer_count: 1_000_000_000_000
+  # Sliding-window: layers kept live in memory simultaneously
+  max_active_layers: 1024
+  # Hypercube dimensionality (4 = tesseract)
+  dimensions: 4
+  # Maximum tesseract-in-tesseract nesting depth
+  max_nesting_depth: 8
+  # Replication factor for fault tolerance
+  replication_factor: 3
+  # Enable N-D quantum-topological routing
+  quantum_routing: true
+
+superconductor:
+  # Conceptual depth – 1 billion superconducting layers
+  logical_layer_count: 1_000_000_000
+  # Active sliding window
+  max_active_layers: 2048
+  # Default workload fraction per tick (0.0–1.0)
+  default_workload: 0.85
+
+cluster:
+  # Maximum number of sub-clusters the regulator manages
+  max_sub_clusters: 1024
+  # Global load ceiling – triggers emergency rebalancing above this value
+  global_load_ceiling: 0.90
+  # Seconds between automatic rebalancing passes
+  rebalance_interval_s: 5.0
+
+vault:
+  # Code-B rotation window in seconds
+  rotation_interval_s: 30.0
+  # Failed authentication attempts before quarantine
+  max_failed_attempts: 5
+  # Serve decoy (honeypot) responses when quarantined
+  honeypot_enabled: true
+  # Auto-quarantine on detected stress or intrusion
+  auto_quarantine_on_stress: true
+
+processor:
+  # Tesseract layers activated per inference request
+  layers_per_inference: 8
+  # Superconductor simulation ticks per inference request
+  ticks_per_inference: 4
+  # Sub-clusters created on startup
+  initial_sub_clusters: 4
+  # Processing nodes per sub-cluster
+  nodes_per_cluster: 8
